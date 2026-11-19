@@ -1,0 +1,5 @@
+*.log
+*.swp
+.env
+*.tar.gz
+docker/squid/blacklists/
