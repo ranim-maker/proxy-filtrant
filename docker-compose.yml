@@ -1,0 +1,28 @@
+services:
+  squid:
+    build: ./docker/squid
+    image: squid-squidguard:v3
+    container_name: squid
+    networks:
+      - proxynet
+    expose:
+      - "3128"
+      - "8081"
+
+  e2guardian:
+    build: ./docker/e2guardian
+    image: e2guardian:v1
+    container_name: e2g
+    environment:
+      PROXY_IP: squid
+      PROXY_PORT: "3128"
+    ports:
+      - "8888:8080"
+    depends_on:
+      - squid
+    networks:
+      - proxynet
+
+networks:
+  proxynet:
+    name: proxynet
